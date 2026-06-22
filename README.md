@@ -59,4 +59,6 @@ Open them from the **⚙️ icon** in the panel header, or from VS Code Settings
 
 ---
 
-Want to build it from source or contribute? See [CONTRIBUTING.md](CONTRIBUTING.md).
+<sub>Built so I could watch photos of my baby girl, Victoria, while I code. 💛</sub>
+
+<sub>Want to build it from source or contribute? See [CONTRIBUTING.md](CONTRIBUTING.md).</sub>
