@@ -1,0 +1,191 @@
+{
+  "name": "photo-slides",
+  "displayName": "Photo Slides",
+  "description": "Show a slideshow of local images in the VS Code Explorer side bar.",
+  "version": "0.1.0",
+  "publisher": "mrohleder",
+  "license": "MIT",
+  "author": {
+    "name": "Matias Rohleder"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/matiasrohleder/PhotoSlidesExtension.git"
+  },
+  "bugs": {
+    "url": "https://github.com/matiasrohleder/PhotoSlidesExtension/issues"
+  },
+  "homepage": "https://github.com/matiasrohleder/PhotoSlidesExtension#readme",
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "Other",
+    "Visualization"
+  ],
+  "keywords": [
+    "photo",
+    "slideshow",
+    "images",
+    "gallery",
+    "slides"
+  ],
+  "galleryBanner": {
+    "color": "#1e1e2e",
+    "theme": "dark"
+  },
+  "main": "./out/extension.js",
+  "activationEvents": [],
+  "contributes": {
+    "views": {
+      "explorer": [
+        {
+          "type": "webview",
+          "id": "photoSlides.view",
+          "name": "Photo Slides",
+          "icon": "media/sidebar-icon.svg",
+          "contextualTitle": "Photo Slides"
+        }
+      ]
+    },
+    "commands": [
+      {
+        "command": "photoSlides.selectFolder",
+        "title": "Photo Slides: Select Photo Folder",
+        "icon": "$(folder-opened)"
+      },
+      {
+        "command": "photoSlides.openSettings",
+        "title": "Photo Slides: Open Settings",
+        "icon": "$(settings-gear)"
+      },
+      {
+        "command": "photoSlides.refresh",
+        "title": "Photo Slides: Reload Current Folder",
+        "icon": "$(refresh)"
+      },
+      {
+        "command": "photoSlides.next",
+        "title": "Photo Slides: Next Image",
+        "icon": "$(chevron-right)"
+      },
+      {
+        "command": "photoSlides.previous",
+        "title": "Photo Slides: Previous Image",
+        "icon": "$(chevron-left)"
+      },
+      {
+        "command": "photoSlides.playPause",
+        "title": "Photo Slides: Play / Pause",
+        "icon": "$(play)"
+      },
+      {
+        "command": "photoSlides.toggleShuffle",
+        "title": "Photo Slides: Toggle Shuffle",
+        "icon": "$(arrow-swap)"
+      }
+    ],
+    "menus": {
+      "view/title": [
+        {
+          "command": "photoSlides.refresh",
+          "when": "view == photoSlides.view",
+          "group": "navigation@1"
+        },
+        {
+          "command": "photoSlides.openSettings",
+          "when": "view == photoSlides.view",
+          "group": "navigation@2"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "Photo Slides",
+      "properties": {
+        "photoSlides.folder": {
+          "type": "string",
+          "default": "",
+          "markdownDescription": "Absolute path to the folder with images.\n\n**[📁 Browse for a folder…](command:photoSlides.selectFolder)** — opens the native folder picker and fills this field automatically.\n\nYou can also pick it from the view (right-click → **Change Folder…**)."
+        },
+        "photoSlides.intervalSeconds": {
+          "type": "number",
+          "default": 5,
+          "minimum": 1,
+          "maximum": 600,
+          "markdownDescription": "Interval in **seconds** between each image during automatic playback."
+        },
+        "photoSlides.shuffle": {
+          "type": "boolean",
+          "default": true,
+          "description": "Play images in random (shuffle) order instead of sequential."
+        },
+        "photoSlides.recursive": {
+          "type": "boolean",
+          "default": false,
+          "description": "Also include images found in sub-folders (recursive scan)."
+        },
+        "photoSlides.sortOrder": {
+          "type": "string",
+          "enum": [
+            "name",
+            "nameDesc",
+            "dateNewest",
+            "dateOldest"
+          ],
+          "enumDescriptions": [
+            "By file name (A → Z).",
+            "By file name (Z → A).",
+            "By modification date (newest first).",
+            "By modification date (oldest first)."
+          ],
+          "default": "name",
+          "description": "Order used in sequential mode (ignored when Shuffle is on)."
+        },
+        "photoSlides.fileTypes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": [
+            "jpg",
+            "jpeg",
+            "png",
+            "gif",
+            "webp",
+            "bmp",
+            "svg"
+          ],
+          "description": "Image file extensions to include (without the leading dot)."
+        },
+        "photoSlides.imageFit": {
+          "type": "string",
+          "enum": [
+            "contain",
+            "cover"
+          ],
+          "enumDescriptions": [
+            "Show the whole image inside the panel (may leave borders).",
+            "Fill the entire panel, cropping the image if needed."
+          ],
+          "default": "contain",
+          "description": "How images should fit the panel size."
+        },
+        "photoSlides.autoplay": {
+          "type": "boolean",
+          "default": true,
+          "description": "Start playback automatically when a folder is loaded."
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.0",
+    "@types/vscode": "^1.85.0",
+    "typescript": "^5.4.0"
+  }
+}
