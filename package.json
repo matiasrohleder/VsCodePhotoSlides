@@ -30,6 +30,7 @@
     "gallery",
     "slides"
   ],
+  "icon": "media/icon.png",
   "galleryBanner": {
     "color": "#1e1e2e",
     "theme": "dark"

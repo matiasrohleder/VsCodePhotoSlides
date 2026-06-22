@@ -43,8 +43,6 @@ npm run watch
 5. Click **"Select photo folder"** (or run the `Photo Slides: Select Photo Folder`
    command from the Command Palette `Ctrl/Cmd + Shift + P`) and choose a folder with images.
 
-> 💡 There are sample images in `sample-photos/` if you want to try it quickly.
-
 ## ⚙️ Configuration
 
 Open the settings from the ⚙️ icon in the panel title bar (or run
