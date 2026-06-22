@@ -37,6 +37,15 @@
   },
   "main": "./out/extension.js",
   "activationEvents": [],
+  "capabilities": {
+    "untrustedWorkspaces": {
+      "supported": "limited",
+      "description": "Runs in untrusted workspaces, but the folder path is only read from your user settings, never from untrusted workspace settings.",
+      "restrictedConfigurations": [
+        "photoSlides.folder"
+      ]
+    }
+  },
   "contributes": {
     "views": {
       "explorer": [

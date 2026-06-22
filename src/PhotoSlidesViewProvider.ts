@@ -1,6 +1,7 @@
 import * as vscode from 'vscode';
 import * as fs from 'fs';
 import * as path from 'path';
+import * as crypto from 'crypto';
 
 /** Extensiones de imagen soportadas por defecto (sin el punto, en minúsculas). */
 const DEFAULT_EXTENSIONS = ['jpg', 'jpeg', 'png', 'gif', 'webp', 'bmp', 'svg'];
@@ -131,8 +132,16 @@ export class PhotoSlidesViewProvider implements vscode.WebviewViewProvider {
     if (!this.currentFolder || !name) {
       return;
     }
-    const target = vscode.Uri.file(path.join(this.currentFolder, name));
-    void vscode.commands.executeCommand('revealFileInOS', target);
+    // Defensa en profundidad: aunque `name` lo genera la extensión, validamos
+    // que la ruta resultante quede dentro de la carpeta elegida (evita un
+    // path traversal teórico si el Webview enviara un nombre malicioso).
+    const root = path.resolve(this.currentFolder);
+    const target = path.resolve(root, name);
+    const rel = path.relative(root, target);
+    if (rel === '' || rel.startsWith('..') || path.isAbsolute(rel)) {
+      return;
+    }
+    void vscode.commands.executeCommand('revealFileInOS', vscode.Uri.file(target));
   }
 
   /** Lee la configuración de reproducción desde los Settings nativos. */
@@ -354,12 +363,13 @@ export class PhotoSlidesViewProvider implements vscode.WebviewViewProvider {
 
     // CSP: solo se permiten imágenes desde el origen del Webview (asWebviewUri),
     // estilos propios y el script con nonce.
+    // CSP estricta: solo recursos del propio Webview. Sin orígenes remotos
+    // (la extensión nunca carga imágenes externas), sin inline scripts/estilos.
     const csp = [
       `default-src 'none'`,
-      `img-src ${webview.cspSource} https: data:`,
+      `img-src ${webview.cspSource}`,
       `style-src ${webview.cspSource}`,
       `script-src 'nonce-${nonce}'`,
-      `font-src ${webview.cspSource}`,
     ].join('; ');
 
     return /* html */ `<!DOCTYPE html>
@@ -422,10 +432,6 @@ export class PhotoSlidesViewProvider implements vscode.WebviewViewProvider {
 }
 
 function getNonce(): string {
-  let text = '';
-  const possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-  for (let i = 0; i < 32; i++) {
-    text += possible.charAt(Math.floor(Math.random() * possible.length));
-  }
-  return text;
+  // Nonce criptográficamente seguro (128 bits) para la CSP.
+  return crypto.randomBytes(16).toString('hex');
 }
