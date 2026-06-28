@@ -10,12 +10,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/matiasrohleder/PhotoSlidesExtension.git"
+    "url": "https://github.com/matiasrohleder/VsCodePhotoSlides.git"
   },
   "bugs": {
-    "url": "https://github.com/matiasrohleder/PhotoSlidesExtension/issues"
+    "url": "https://github.com/matiasrohleder/VsCodePhotoSlides/issues"
   },
-  "homepage": "https://github.com/matiasrohleder/PhotoSlidesExtension#readme",
+  "homepage": "https://github.com/matiasrohleder/VsCodePhotoSlides#readme",
   "engines": {
     "vscode": "^1.85.0"
   },
