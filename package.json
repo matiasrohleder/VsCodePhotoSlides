@@ -1,8 +1,8 @@
 {
   "name": "photo-slides",
   "displayName": "Photo Slides",
-  "description": "Show a slideshow of local images in the VS Code Explorer side bar.",
-  "version": "0.1.0",
+  "description": "Show a synchronized photo slideshow in the VS Code side bar with full-screen lightbox.",
+  "version": "1.0.0",
   "publisher": "mrohleder",
   "license": "MIT",
   "author": {
@@ -10,12 +10,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/matiasrohleder/PhotoSlidesExtension.git"
+    "url": "https://github.com/matiasrohleder/VsCodePhotoSlides.git"
   },
   "bugs": {
-    "url": "https://github.com/matiasrohleder/PhotoSlidesExtension/issues"
+    "url": "https://github.com/matiasrohleder/VsCodePhotoSlides/issues"
   },
-  "homepage": "https://github.com/matiasrohleder/PhotoSlidesExtension#readme",
+  "homepage": "https://github.com/matiasrohleder/VsCodePhotoSlides#readme",
   "engines": {
     "vscode": "^1.85.0"
   },
@@ -52,6 +52,24 @@
         {
           "type": "webview",
           "id": "photoSlides.view",
+          "name": "Photo Slides",
+          "icon": "media/sidebar-icon.svg",
+          "contextualTitle": "Photo Slides"
+        }
+      ],
+      "scm": [
+        {
+          "type": "webview",
+          "id": "photoSlides.scmView",
+          "name": "Photo Slides",
+          "icon": "media/sidebar-icon.svg",
+          "contextualTitle": "Photo Slides"
+        }
+      ],
+      "debug": [
+        {
+          "type": "webview",
+          "id": "photoSlides.debugView",
           "name": "Photo Slides",
           "icon": "media/sidebar-icon.svg",
           "contextualTitle": "Photo Slides"
@@ -99,12 +117,12 @@
       "view/title": [
         {
           "command": "photoSlides.refresh",
-          "when": "view == photoSlides.view",
+          "when": "view == photoSlides.view || view == photoSlides.scmView || view == photoSlides.debugView",
           "group": "navigation@1"
         },
         {
           "command": "photoSlides.openSettings",
-          "when": "view == photoSlides.view",
+          "when": "view == photoSlides.view || view == photoSlides.scmView || view == photoSlides.debugView",
           "group": "navigation@2"
         }
       ]
@@ -184,6 +202,22 @@
           "type": "boolean",
           "default": true,
           "description": "Start playback automatically when a folder is loaded."
+        },
+        "photoSlides.panels": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "explorer",
+              "scm",
+              "debug"
+            ]
+          },
+          "uniqueItems": true,
+          "default": [
+            "explorer"
+          ],
+          "markdownDescription": "Which sidebar panels should display Photo Slides.\n\n- `explorer` — File Explorer\n- `scm` — Source Control\n- `debug` — Run & Debug\n\nAll enabled panels share the same current photo."
         }
       }
     }
