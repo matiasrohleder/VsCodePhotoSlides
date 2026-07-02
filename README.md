@@ -52,6 +52,9 @@ All enabled panels are **fully synchronized**: same photo, same play/pause state
 same shuffle — controlled by a single shared timer. Navigating or pausing in any
 one panel instantly updates all the others.
 
+Panels that aren't listed in `photoSlides.panels` don't show up at all in their
+side bar — no need to manually collapse or hide them.
+
 ## Settings
 
 Open them from the **⚙️ icon** in the panel header, or search *Photo Slides* in VS Code Settings.
