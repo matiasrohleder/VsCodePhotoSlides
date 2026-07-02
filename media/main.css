@@ -33,6 +33,18 @@ body {
   display: none !important;
 }
 
+/* -------------------------------------------------------------- Loading state */
+.loading-state {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.loading-state .spinner {
+  position: static;
+}
+
 /* ---------------------------------------------------------------- Empty state */
 .empty-state {
   flex: 1;

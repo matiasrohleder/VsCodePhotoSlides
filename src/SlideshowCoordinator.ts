@@ -76,6 +76,7 @@ export class SlideshowCoordinator {
     this._playing = autoplay && images.length > 1;
     this._buildOrder(false);
     this._restartTimer();
+    this._broadcastShow();
   }
 
   /** Actualiza el intervalo sin recargar imágenes (cambio de settings en vivo). */

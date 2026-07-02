@@ -2,7 +2,7 @@
   "name": "photo-slides",
   "displayName": "Photo Slides",
   "description": "Show a synchronized photo slideshow in the VS Code side bar with full-screen lightbox.",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "publisher": "mrohleder",
   "license": "MIT",
   "author": {
@@ -54,7 +54,8 @@
           "id": "photoSlides.view",
           "name": "Photo Slides",
           "icon": "media/sidebar-icon.svg",
-          "contextualTitle": "Photo Slides"
+          "contextualTitle": "Photo Slides",
+          "when": "'explorer' in config.photoSlides.panels"
         }
       ],
       "scm": [
@@ -63,7 +64,8 @@
           "id": "photoSlides.scmView",
           "name": "Photo Slides",
           "icon": "media/sidebar-icon.svg",
-          "contextualTitle": "Photo Slides"
+          "contextualTitle": "Photo Slides",
+          "when": "'scm' in config.photoSlides.panels"
         }
       ],
       "debug": [
@@ -72,7 +74,8 @@
           "id": "photoSlides.debugView",
           "name": "Photo Slides",
           "icon": "media/sidebar-icon.svg",
-          "contextualTitle": "Photo Slides"
+          "contextualTitle": "Photo Slides",
+          "when": "'debug' in config.photoSlides.panels"
         }
       ]
     },

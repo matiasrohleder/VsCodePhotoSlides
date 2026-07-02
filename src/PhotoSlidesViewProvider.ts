@@ -326,7 +326,7 @@ export class PhotoSlidesViewProvider
     const csp = [
       `default-src 'none'`,
       `img-src ${webview.cspSource}`,
-      `style-src ${webview.cspSource}`,
+      `style-src ${webview.cspSource} 'nonce-${nonce}'`,
       `script-src 'nonce-${nonce}'`,
     ].join('; ');
 
@@ -336,12 +336,21 @@ export class PhotoSlidesViewProvider
   <meta charset="UTF-8" />
   <meta http-equiv="Content-Security-Policy" content="${csp}" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style nonce="${nonce}">
+    html, body {
+      background-color: var(--vscode-sideBar-background, var(--vscode-editor-background));
+    }
+  </style>
   <link href="${styleUri}" rel="stylesheet" />
   <title>Photo Slides</title>
 </head>
 <body>
   <div id="app">
-    <div id="empty-state" class="empty-state">
+    <div id="loading-state" class="loading-state">
+      <div class="spinner" aria-hidden="true"></div>
+    </div>
+
+    <div id="empty-state" class="empty-state hidden">
       <div class="empty-icon" aria-hidden="true">🖼️</div>
       <p id="empty-message" class="empty-message">No photo folder selected yet.</p>
       <button id="empty-select-btn" class="primary-btn" type="button">Select photo folder</button>

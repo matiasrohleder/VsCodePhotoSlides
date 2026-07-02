@@ -9,6 +9,7 @@
   const vscode = acquireVsCodeApi();
 
   // ----------------------------------------------------------------- Elements
+  const loadingState = document.getElementById('loading-state');
   const emptyState   = document.getElementById('empty-state');
   const emptyMessage = document.getElementById('empty-message');
   const emptySelectBtn   = document.getElementById('empty-select-btn');
@@ -131,6 +132,7 @@
   // -------------------------------------------------------------- Ext messages
   window.addEventListener('message', (event) => {
     const msg = event.data;
+    loadingState.classList.add('hidden');
     switch (msg.type) {
 
       // Carga inicial de una carpeta: recibe URIs webview-específicas.
